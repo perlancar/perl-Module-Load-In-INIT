@@ -1,4 +1,4 @@
-Module-Load-At-INIT-*
+Module-Load-In-INIT-*
 .build
 *~
 nytprof*

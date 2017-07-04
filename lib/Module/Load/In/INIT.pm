@@ -13,13 +13,13 @@ sub import {
 
 INIT {
     for my $mod (@mods) {
-        my $mod_pm;
-        if ($mod =~ m!/!) {
-            $mod_pm = $mod;
-        } else {
-            ($mod_pm = "$mod.pm") =~ s!::!/!g;
+        my @import_args;
+        if ($mod =~ s!=(.*)!!) {
+            @import_args = split /;/, $1;
         }
+        (my $mod_pm = "$mod.pm") =~ s!::!/!g;
         require $mod_pm;
+        $mod->import(@import_args);
     }
 }
 
@@ -31,7 +31,7 @@ INIT {
 
 In the command-line:
 
- % perl -MModule::Load::In::INIT=Mod::One,Mod::Two somescript.pl
+ % perl -MModule::Load::In::INIT=Mod::One,Mod::Two='Some;Import;Args' somescript.pl
 
 C<Mod::One> and C<Mod::Two> will be loaded in the INIT phase instead of BEGIN
 phase.
