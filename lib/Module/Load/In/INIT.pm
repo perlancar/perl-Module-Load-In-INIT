@@ -61,4 +61,7 @@ Loading of C<Some::Module::Patch::Foo> (and by extension, C<Some::Module>) is
 deferred to the INIT phase. By that time, the fatpack require hook has been
 setup and C<Some::Module> can be (or might already be) loaded by it.
 
+Caveat: Module::Load::In::INIT itself must be loaded in the BEGIN phase, or INIT
+phase at the latest.
+
 =cut
