@@ -3,6 +3,9 @@ package Module::Load::In::INIT;
 # DATE
 # VERSION
 
+use strict;
+#use warnings; # warns: Too late to run INIT block
+
 my @mods;
 
 sub import {
