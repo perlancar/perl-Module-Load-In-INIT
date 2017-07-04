@@ -50,10 +50,15 @@ L<Module::FatPack> or L<App::FatPacker>), e.g.:
  % perl -MSome::Module::Patch::Foo fatpacked-script.pl
 
 C<Some::Module::Patch::Foo> will try to load C<Some::Module> then patch it. This
-will fail when module is loaded by the fatpack handler (which is a require hook)
-as by the time C<Some::Module::Patch::Foo> is loaded, the fatpack handler has
-not been setup yet. This, however, works:
+might fail when module is loaded by the fatpack handler (which is a require
+hook) as by the time C<Some::Module::Patch::Foo> is loaded, the fatpack handler
+has not been setup yet, and C<Some::Module> is not available elsewhere (on the
+filesystem). This, however, works:
 
  % perl -MModule::Load::In::INIT=Some::Module::Patch::Foo fatpacked-script.pl
+
+Loading of C<Some::Module::Patch::Foo> (and by extension, C<Some::Module>) is
+deferred to the INIT phase. By that time, the fatpack require hook has been
+setup and C<Some::Module> can be (or might already be) loaded by it.
 
 =cut
