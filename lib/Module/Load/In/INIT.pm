@@ -15,14 +15,26 @@ sub import {
 }
 
 INIT {
+    my %opts;
     for my $mod (@mods) {
+        if ($mod =~ /^-(.+?)(?:=(.*))?\z/) {
+            $opts{$1} = defined $2 ? $2 : 1;
+            next;
+        }
         my @import_args;
         if ($mod =~ s!=(.*)!!) {
             @import_args = split /;/, $1;
         }
         (my $mod_pm = "$mod.pm") =~ s!::!/!g;
-        require $mod_pm;
-        $mod->import(@import_args);
+        eval { require $mod_pm; 1 };
+        if ($@) {
+            if ($opts{ignore_load_error}) {
+                next;
+            } else {
+                die;
+            }
+            $mod->import(@import_args);
+        }
     }
 }
 
@@ -38,6 +50,10 @@ In the command-line:
 
 C<Mod::One> and C<Mod::Two> will be loaded in the INIT phase instead of BEGIN
 phase.
+
+Specify options for Module::Load::In::INIT itself:
+
+ % perl -MModule::Load::In::INIT=-ignore_load_error,Mod::One,Mod::Two
 
 
 =head1 DESCRIPTION
@@ -63,5 +79,19 @@ setup and C<Some::Module> can be (or might already be) loaded by it.
 
 Caveat: Module::Load::In::INIT itself must be loaded in the BEGIN phase, or INIT
 phase at the latest.
+
+
+=head1 OPTIONS
+
+You can specify options for Module::Load::In::INIT itself via import argument
+that starts with dash ("-"). Known options:
+
+=over
+
+=item -ignore_load_error
+
+If set, then require() error will be ignored.
+
+=back
 
 =cut
