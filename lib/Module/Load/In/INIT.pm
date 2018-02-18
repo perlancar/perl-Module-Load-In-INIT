@@ -33,8 +33,8 @@ INIT {
             } else {
                 die;
             }
-            $mod->import(@import_args);
         }
+        $mod->import(@import_args);
     }
 }
 
