@@ -1,27 +1,27 @@
-0.005   2018-02-18 (PERLANCAR)
+0.005   2018-02-18  Released-By: PERLANCAR
 
 	- [Bugfix] Target module's import() was never called.
 
 
-0.004   2018-01-15 (PERLANCAR)
+0.004   2018-01-15  Released-By: PERLANCAR
 
 	- Introduce options, add option -ignore_load_error.
 
 
-0.003   2017-07-04 (PERLANCAR)
+0.003   2017-07-04  Released-By: PERLANCAR
 
 	- No functional changes.
 
 	- [doc] Add caveat.
 
 
-0.002   2017-07-04 (PERLANCAR)
+0.002   2017-07-04  Released-By: PERLANCAR
 
 	- No functional changes.
 
 	- [doc] Wording.
 
 
-0.001   2017-07-04 (PERLANCAR)
+0.001   2017-07-04  Released-By: PERLANCAR
 
         - First release.
